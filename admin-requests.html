@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Request Approval</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<script>
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser || currentUser.role !== "admin") {
+    window.location.href = "login.html";
+}
+</script>
+<div class="container">
+  <div class="card">
+    <div class="page-header">
+      <div>
+        <h1>İstek Onay Paneli</h1>
+        <p>Onay bekleyen istek taleplerini yönet.</p>
+      </div>
+
+      <div class="page-actions">
+        <button type="button" class="secondary-btn" onclick="window.location.href='admin.html'">Admin Paneli</button>
+        <button type="button" class="secondary-btn" onclick="window.location.href='admin-users.html'">Kullanıcılar</button>
+        <button type="button" class="secondary-btn" onclick="window.location.href='admin-kb.html'">Knowledge Base</button>
+        <button type="button" class="secondary-btn" onclick="window.location.href='ai-agent-reports.html'">AI Rapor</button>
+        <button type="button" class="logout-btn" onclick="logout()">Çıkış Yap</button>
+      </div>
+    </div>
+
+    <div id="adminRequestsList"></div>
+  </div>
+</div>
+
+<script src="request.js"></script>
+<script src="session-timeout.js"></script>
+</body>
+</html>

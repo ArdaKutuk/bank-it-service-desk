@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank IT Service Desk - Staff</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<script>
+    const staffUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+    const allowedStaffRoles = ["ms", "technical", "network"];
+
+    if (!staffUser || !allowedStaffRoles.includes(staffUser.role)) {
+        window.location.replace("login.html");
+    }
+</script>
+
+<div class="container">
+    <div class="card">
+
+        <div class="logo-area">
+            <a class="logo-box logo-link" href="login.html" aria-label="Giriş sayfasına git"><img src="assets/bank-logo.svg" alt="Banka"></a>
+
+            <div class="staff-header">
+                <div>
+                    <h1 id="staffPanelTitle">IT Staff Panel</h1>
+                    <p id="staffPanelSubtitle">Kendime Atanan Çağrılar</p>
+                </div>
+
+                <div class="page-actions">
+                    <span class="staff-badge">Aktif Personel</span>
+                    <button class="secondary-btn" onclick="loadStaffTickets()">Yenile</button>
+                    <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="ticketDetail"></div>
+
+        <div id="ticketList"></div>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        const roleLabelMap = {
+            ms: ["MS Staff Panel", "Microsoft ekibine atanan çağrılar"],
+            technical: ["Technical Staff Panel", "Technical ekibine atanan çağrılar"],
+            network: ["Network Staff Panel", "Network ekibine atanan çağrılar"]
+        };
+        const currentRole = (staffUser && staffUser.role) || "ms";
+        const panel = roleLabelMap[currentRole] || ["IT Staff Panel", "Kendime Atanan Çağrılar"];
+        const title = document.getElementById("staffPanelTitle");
+        const subtitle = document.getElementById("staffPanelSubtitle");
+
+        if (title) title.innerText = panel[0];
+        if (subtitle) subtitle.innerText = panel[1];
+
+        loadStaffTickets();
+    });
+</script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

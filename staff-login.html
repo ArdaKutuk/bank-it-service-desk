@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank IT Service Desk - Staff Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-login-page">
+
+<div class="admin-card">
+
+    <h1>IT Staff Login</h1>
+
+    <p>Bank IT Service Desk</p>
+
+    <input type="text" id="username" placeholder="IT Personel Kullanıcı Adı">
+
+    <input type="password" id="password" placeholder="Şifre">
+
+    <button onclick="login()">
+        Staff Giriş Yap
+    </button>
+
+    <div id="loginResult"></div>
+
+    <div class="back-to-user">
+        <a href="login.html">← User Login</a>
+    </div>
+
+</div>
+
+<script src="login.js"></script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

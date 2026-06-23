@@ -1,0 +1,278 @@
+<!DOCTYPE html> 
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Departmanı IT Destek Aracı</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+    const username = localStorage.getItem("username");
+
+    if (!username) {
+        window.location.replace("login.html");
+    }
+    </script>
+    
+</head>
+<body>
+    <script>
+    const currentUser =
+    JSON.parse(localStorage.getItem("currentUser"));
+
+    if (!currentUser) {
+        window.location.href = "login.html";
+    }
+
+    if (currentUser.role !== "user") {
+        alert("Bu sayfaya erişim yetkiniz yok.");
+        window.location.href = "login.html";
+    }
+    </script>
+    <div class="container">
+    <div class="logo-area">
+
+    <a class="logo-box logo-link" href="login.html" aria-label="Giriş sayfasına git"><img src="assets/bank-logo.svg" alt="Banka"></a>
+
+    <div>
+        <h1>Bank IT Service Desk</h1>
+        <p>Internal Support & Ticket Management Platform</p>
+    </div>
+
+    <div class="page-actions">
+        <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+    </div>
+
+    </div>
+    <div class="card user-portal">
+        <aside class="user-sidebar">
+            <button class="user-menu-item active" type="button" data-section="chatbot" onclick="showUserPanel('chatbot')">Destek Asistanı</button>
+            <button class="user-menu-item" type="button" data-section="ticket" onclick="showUserPanel('ticket')">Ticket Oluştur</button>
+            <button class="user-menu-item" type="button" data-section="request" onclick="showUserPanel('request')">İstek Oluştur</button>
+            <button class="user-menu-item" type="button" data-section="tickets" onclick="showUserPanel('tickets')">Çağrılarım</button>
+        </aside>
+
+        <main class="user-content">
+            <section id="chatbotPanel" class="user-panel active">
+                <div class="kb-chatbot user-chatbot">
+                    <div class="kb-chatbot-header">
+                        <div>
+                            <h1>Destek Asistanı</h1>
+                            <p>Sorununuzu yazın; hangi çağrı türünü ve hangi sorun seçeneğini kullanmanız gerektiğini önerelim.</p>
+                        </div>
+                        <span class="staff-badge">AI + KB</span>
+                    </div>
+
+                    <textarea id="kbQuestion" placeholder="Örn: eposta gönderemiyorum, VPN bağlanıyor ama iç sistem açılmıyor, yazıcı kağıt sıkıştı"></textarea>
+                    <div class="ticket-actions">
+                        <button type="button" onclick="askKnowledgeBase()">Analiz Et</button>
+                        <button type="button" class="secondary-btn" onclick="clearKbChat()">Temizle</button>
+                    </div>
+
+                    <div id="kbAnswer" class="kb-answer">
+                        Sorununuzu yazın; asistan uygun ticket türünü, sorun seçimini ve KB önerilerini gösterecek.
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button type="button" onclick="showUserPanel('ticket')">Ticket Oluştur</button>
+                    <button type="button" class="secondary-btn" onclick="showUserPanel('request')">İstek Talebi Oluştur</button>
+                </div>
+            </section>
+
+            <section id="ticketPanel" class="user-panel">
+                <div class="page-header">
+                    <div>
+                        <h2>Ticket Oluştur</h2>
+                        <p>Asistan önerisiyle gelen sorun türünü kontrol edin, açıklamayı tamamlayın ve çağrıyı oluşturun.</p>
+                    </div>
+                    <div class="page-actions">
+                        <button type="button" class="secondary-btn" onclick="showUserPanel('chatbot')">Asistana Dön</button>
+                    </div>
+                </div>
+
+                <input type="hidden" id="issueSelect" value="">
+
+                <div class="service-picker">
+                    <div class="service-picker-header">
+                        <h3>Departman Seç</h3>
+                        <p>Önce ilgili destek ekibini seçin, ardından alt konu başlığını belirleyin.</p>
+                    </div>
+                    <div id="ticketDepartmentCards" class="service-logo-grid"></div>
+                    <div id="ticketTopicArea" class="service-topic-area"></div>
+                </div>
+
+                <select id="legacyIssueSelect" class="visually-hidden" aria-hidden="true" tabindex="-1">
+                    <option value="">Sorun Seçiniz</option>
+                    <optgroup label="Microsoft 365 ve Hesap">
+                        <option value="outlook">Outlook açılmıyor / çalışmıyor</option>
+                        <option value="email_delivery">E-posta gönderme / alma sorunu</option>
+                        <option value="teams">Teams toplantı / ses / kamera sorunu</option>
+                        <option value="password">Şifre / hesap kilidi</option>
+                        <option value="mfa">MFA / Authenticator / OTP sorunu</option>
+                        <option value="account_access">Oturum açma / hesap erişimi</option>
+                        <option value="onedrive">OneDrive senkronizasyon sorunu</option>
+                        <option value="sharepoint">SharePoint / ortak dosya erişimi</option>
+                        <option value="office_apps">Word / Excel / PowerPoint sorunu</option>
+                        <option value="mailbox_quota">Mailbox kota doluluğu</option>
+                        <option value="distribution_group">Dağıtım grubu / ortak mailbox sorunu</option>
+                        <option value="calendar">Takvim / toplantı daveti sorunu</option>
+                    </optgroup>
+                    <optgroup label="Network ve Erişim">
+                        <option value="vpn">VPN bağlantı problemi</option>
+                        <option value="internet">İnternet erişimi yok</option>
+                        <option value="wifi">Wi-Fi / kablosuz bağlantı sorunu</option>
+                        <option value="lan">Kablolu ağ / ethernet sorunu</option>
+                        <option value="dns">DNS / isim çözümleme sorunu</option>
+                        <option value="network_drive">Ortak klasör / network drive erişimi</option>
+                        <option value="internal_app_access">İç uygulama / core banking erişimi</option>
+                        <option value="slow_network">Ağ yavaşlığı / kopma</option>
+                        <option value="printer_network">Network yazıcı erişimi</option>
+                        <option value="voip">Telefon / VoIP sorunu</option>
+                    </optgroup>
+                    <optgroup label="Donanım ve Cihaz">
+                        <option value="laptop">Laptop açılmıyor / performans sorunu</option>
+                        <option value="desktop">Masaüstü bilgisayar sorunu</option>
+                        <option value="monitor">Monitör / ekran görüntü sorunu</option>
+                        <option value="keyboard_mouse">Klavye / mouse sorunu</option>
+                        <option value="printer">Yazıcı çıktı / toner / kağıt sorunu</option>
+                        <option value="scanner">Tarayıcı / scanner sorunu</option>
+                        <option value="peripheral">Kamera / kulaklık / adaptör sorunu</option>
+                        <option value="mobile_device">Mobil cihaz / kurum telefonu sorunu</option>
+                        <option value="pos_atm_device">POS / ATM / kart okuyucu cihaz sorunu</option>
+                        <option value="software_install">Yazılım kurulum / kaldırma sorunu</option>
+                    </optgroup>
+                </select>
+
+                <div class="ticket-actions">
+                    <button type="button" onclick="showSolution()">Yönlendirme Oluştur</button>
+                </div>
+
+                <div id="questionArea"></div>
+                <div id="result">Yönlendirme sonucu burada görüntülenecek.</div>
+                <div id="ticketPreparedNotice" class="prepared-notice"></div>
+
+                <div id="ticketForm">
+                    <h3>Ticket Bilgileri</h3>
+                    <input type="text" id="fullName" placeholder="Ad Soyad">
+                    <input type="text" id="department" placeholder="Departman">
+                    <textarea id="summary" placeholder="Sorun özeti"></textarea>
+                    <button onclick="createTicket()">Ticket Oluştur</button>
+                </div>
+            </section>
+
+            <section id="requestPanel" class="user-panel">
+                <div class="page-header">
+                    <div>
+                        <h2>İstek Oluştur</h2>
+                        <p>Donanım, yazılım, lisans, erişim ve network taleplerini aynı ekrandan oluşturun.</p>
+                    </div>
+                    <div class="page-actions">
+                        <button type="button" class="secondary-btn" onclick="showUserPanel('chatbot')">Asistana Dön</button>
+                    </div>
+                </div>
+
+                <form id="requestForm">
+                    <label for="requestFullName">Ad Soyad</label>
+                    <input type="text" id="requestFullName" required>
+
+                    <label for="requestDepartment">Departman</label>
+                    <input type="text" id="requestDepartment" required>
+
+                    <input type="hidden" id="requestType" value="" required>
+
+                    <div class="service-picker request-service-picker">
+                        <div class="service-picker-header">
+                            <h3>İstek Grubu Seç</h3>
+                            <p>Önce talep grubunu seçin, ardından açılacak alt başlıklardan isteğinizi belirleyin.</p>
+                        </div>
+                        <div id="requestDepartmentCards" class="service-logo-grid"></div>
+                        <div id="requestTopicArea" class="service-topic-area"></div>
+                    </div>
+
+                    <div id="requestPreparedNotice" class="prepared-notice"></div>
+
+                    <label for="requestDescription">Açıklama</label>
+                    <textarea id="requestDescription" required></textarea>
+
+                    <button type="submit">İstek Oluştur</button>
+                </form>
+
+                <p id="requestMessage"></p>
+
+                <hr>
+
+                <div class="page-header compact-header">
+                    <div>
+                        <h3>İstek Taleplerim</h3>
+                        <p>Oluşturduğunuz istek kayıtlarını ve durumlarını izleyin.</p>
+                    </div>
+                    <div class="page-actions">
+                        <button type="button" class="secondary-btn" onclick="loadUserRequestsForPortal()">Yenile</button>
+                    </div>
+                </div>
+
+                <div id="userRequestDetail"></div>
+                <div id="userRequestsList"></div>
+            </section>
+
+            <section id="ticketsPanel" class="user-panel">
+                <div class="page-header">
+                    <div>
+                        <h2>Çağrılarım</h2>
+                        <p>Oluşturduğunuz ticket kayıtlarını izleyin, filtreleyin ve CSV olarak indirin.</p>
+                    </div>
+                    <div class="page-actions">
+                        <button type="button" class="secondary-btn" onclick="loadTickets()">Yenile</button>
+                        <button type="button" class="secondary-btn" onclick="exportCSV()">CSV İndir</button>
+                    </div>
+                </div>
+
+                <div id="dashboard"></div>
+
+                <div class="filter-tabs">
+                    <input type="text" id="searchInput" placeholder="Ticket no, kategori veya ekip ara">
+                    <button onclick="searchTickets()">Ara</button>
+
+                    <select id="statusFilter" onchange="filterTickets()">
+                        <option value="all">Tüm Durumlar</option>
+                        <option value="Açık">Açık</option>
+                        <option value="İnceleniyor">İnceleniyor</option>
+                        <option value="Çözüldü">Çözüldü</option>
+                    </select>
+
+                    <select id="categoryFilter" onchange="filterByCategory()">
+                        <option value="all">Tüm Ekipler</option>
+                        <option value="MS">MS</option>
+                        <option value="Network">Network</option>
+                        <option value="Technical">Technical</option>
+                    </select>
+
+                    <select id="sortSelect" onchange="sortTickets()">
+                        <option value="newest">En Yeni</option>
+                        <option value="oldest">En Eski</option>
+                        <option value="priority">Öncelik</option>
+                        <option value="status">Durum</option>
+                    </select>
+                </div>
+
+                <div id="ticketDetail"></div>
+                <div id="ticketList"></div>
+            </section>
+
+            <section id="reportsSection">
+                <div id="categoryReport"></div>
+                <div id="statusReport"></div>
+                <div id="priorityReport"></div>
+                <div id="managerSummary"></div>
+                <div id="departmentReport"></div>
+                <div id="criticalReport"></div>
+                <div id="recentTicketsReport"></div>
+                <div id="teamWorkloadReport"></div>
+            </section>
+        </main>
+    </div>
+</div>
+<script src="script.js"></script>
+<script src="session-timeout.js"></script>
+</body>
+</html>

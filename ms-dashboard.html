@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>MS Queue</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script>
+const currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+    window.location.href = "login.html";
+}
+
+if (currentUser.role !== "ms") {
+    alert("Bu sayfaya erişim yetkiniz yok.");
+    window.location.href = "login.html";
+}
+</script>
+<div class="container">
+    <div class="card">
+        <div class="page-header">
+            <div>
+                <h1>MS Ekibi Kuyruğu</h1>
+                <p>Microsoft Services ekibine atanmış ticket ve requestler.</p>
+            </div>
+
+            <div class="page-actions">
+                <button class="secondary-btn" onclick="loadTeamDashboard('MS')">Yenile</button>
+                <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2>MS Ticketları</h2>
+        <div id="teamTickets"></div>
+
+        <hr>
+        <div id="teamTicketDetail"></div>
+
+        <hr>
+        <h2>MS Requestleri</h2>
+        <div id="teamRequests"></div>
+        <div id="teamRequestDetail"></div>
+    </div>
+</div>
+
+<script src="team-dashboard.js"></script>
+<script>
+    loadTeamDashboard("MS");
+</script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

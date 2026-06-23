@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank IT Service Desk - Knowledge Base</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="admin-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <a class="logo-box logo-link" href="login.html" aria-label="Giriş sayfasına git"><img src="assets/bank-logo.svg" alt="Banka"></a>
+                    <h3>IT Service Desk</h3>
+                </div>
+
+                <a href="admin.html">🏠 Dashboard</a>
+                <a href="admin-tickets.html">📋 Tickets</a>
+                <a href="admin-reports.html">📊 Reports</a>
+                <a href="admin-requests.html">Requests</a>
+                <a href="staff-performance.html">Staff Performance</a>
+                <a href="ai-agent-reports.html">AI Agent Rapor</a>
+                <a href="audit-log.html">Audit Log</a>
+                <a href="admin-users.html">Kullanıcı Yönetimi</a>
+                <a href="admin-kb.html" class="active">Knowledge Base</a>
+
+                <button onclick="logout()">Çıkış Yap</button>
+            </aside>
+
+            <main class="content-area">
+                <div class="logo-area">
+                    <div>
+                        <h1>Knowledge Base Yönetimi</h1>
+                        <p>KB makalelerini oluştur, güncelle ve çözüm adımlarını canlı tut.</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div id="kbSummary" class="performance-summary"></div>
+
+                <div class="ticket-card">
+                    <h2 id="kbFormTitle">Yeni KB Makalesi Oluştur</h2>
+                    <form id="kbForm">
+                        <input type="hidden" id="kbArticleId" value="">
+                        <input id="kbTitle" type="text" placeholder="Başlık" required>
+                        <input id="kbCategory" type="text" placeholder="Kategori" required>
+                        <input id="kbKeywords" type="text" placeholder="Anahtar kelimeler" required>
+                        <select id="kbActive">
+                            <option value="1">Aktif</option>
+                            <option value="0">Pasif</option>
+                        </select>
+                        <textarea id="kbContent" placeholder="Makale içeriği" required></textarea>
+                        <textarea id="kbSteps" placeholder="Çözüm adımları"></textarea>
+                        <button type="submit" id="kbFormSubmit">Makale Kaydet</button>
+                        <button type="button" class="secondary-btn" onclick="resetKbForm()">Formu Temizle</button>
+                    </form>
+                </div>
+
+                <div class="top-right-actions">
+                    <input id="kbSearch" type="text" placeholder="KB makalesi ara" oninput="filterKbArticles()">
+                    <button class="secondary-btn" onclick="loadKbArticles()">Yenile</button>
+                </div>
+
+                <div id="kbList"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script>
+    const adminRole = localStorage.getItem("role");
+
+    if (!adminRole || adminRole !== "admin") {
+        window.location.replace("login.html");
+    }
+</script>
+
+<script src="admin-kb.js"></script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

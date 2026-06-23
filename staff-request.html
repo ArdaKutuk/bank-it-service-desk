@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>IT Staff Request Inbox</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<script>
+  const staffUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+  const allowedStaffRoles = ["ms", "technical", "network"];
+
+  if (!staffUser || !allowedStaffRoles.includes(staffUser.role)) {
+    window.location.replace("login.html");
+  }
+</script>
+
+<div class="container">
+  <div class="card">
+    <h1>IT Request Kutusu</h1>
+    <p>Onaylanan istek taleplerini tamamla.</p>
+
+    <div id="staffRequestsList"></div>
+    <div id="staffRequestDetail"></div>
+  </div>
+</div>
+
+<script src="request.js"></script>
+<script src="session-timeout.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Network Queue</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script>
+const currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+    window.location.href = "login.html";
+}
+
+if (currentUser.role !== "network") {
+    alert("Bu sayfaya erişim yetkiniz yok.");
+    window.location.href = "login.html";
+}
+</script>
+<div class="container">
+    <div class="card">
+        <div class="page-header">
+            <div>
+                <h1>Network Ekibi Kuyruğu</h1>
+                <p>Network ekibine atanmış ticket ve requestler.</p>
+            </div>
+
+            <div class="page-actions">
+                <button class="secondary-btn" onclick="loadTeamDashboard('Network')">Yenile</button>
+                <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2>Network Ticketları</h2>
+        <div id="teamTickets"></div>
+
+        <hr>
+        <div id="teamTicketDetail"></div>
+
+        <hr>
+        <h2>Network Requestleri</h2>
+        <div id="teamRequests"></div>
+        <div id="teamRequestDetail"></div>
+
+    </div>
+</div>
+
+<script src="team-dashboard.js"></script>
+<script>
+    loadTeamDashboard("Network");
+</script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

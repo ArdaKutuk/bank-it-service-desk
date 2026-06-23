@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank IT Service Desk - Staff Performance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="admin-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <a class="logo-box logo-link" href="login.html" aria-label="Giriş sayfasına git"><img src="assets/bank-logo.svg" alt="Banka"></a>
+                    <h3>IT Service Desk</h3>
+                </div>
+
+                <a href="admin.html">Dashboard</a>
+                <a href="admin-tickets.html">Tickets</a>
+                <a href="admin-reports.html">Reports</a>
+                <a href="admin-requests.html">Requests</a>
+                <a href="staff-performance.html" class="active">Staff Performance</a>
+                <a href="ai-agent-reports.html">AI Agent Rapor</a>
+                <a href="audit-log.html">Audit Log</a>
+                <a href="admin-users.html">Kullanıcı Yönetimi</a>
+                <a href="admin-kb.html">Knowledge Base</a>
+
+                <button onclick="logout()">Çıkış Yap</button>
+            </aside>
+
+            <main class="content-area">
+                <div class="logo-area">
+                    <div>
+                        <h1>Staff Performance</h1>
+                        <p>Ticket ve request tamamlanma performansı</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div id="staffPerformanceSummary" class="performance-summary"></div>
+                <div id="staffPerformanceList"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script>
+    const adminRole = localStorage.getItem("role");
+
+    if (!adminRole || adminRole !== "admin") {
+        window.location.replace("login.html");
+    }
+</script>
+<script src="staff-performance.js"></script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

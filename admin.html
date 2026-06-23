@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank IT Service Desk - Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+
+        <div class="admin-layout">
+
+            <aside class="sidebar">
+
+                <div class="sidebar-logo">
+                    <a class="logo-box logo-link" href="login.html" aria-label="Giriş sayfasına git"><img src="assets/bank-logo.svg" alt="Banka"></a>
+                    <h3>IT Service Desk</h3>
+                </div>
+
+                <a href="admin.html" class="active">🏠 Dashboard</a>
+                <a href="admin-tickets.html">📋 Tickets</a>
+                <a href="admin-reports.html">📊 Reports</a>
+                <a href="admin-requests.html">📦 Requests</a>
+                <a href="staff-performance.html">Staff Performance</a>
+                <a href="ai-agent-reports.html">AI Agent Rapor</a>
+                <a href="audit-log.html">Audit Log</a>
+                <a href="admin-users.html">Kullanıcı Yönetimi</a>
+                <a href="admin-kb.html">Knowledge Base</a>
+
+                <button onclick="logout()">Çıkış Yap</button>
+
+            </aside>
+
+            <main class="content-area">
+
+                <div class="logo-area">
+                    <div>
+                        <h1>Admin Panel</h1>
+                        <p>Bank IT Service Desk</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="admin-home">
+
+                    <div class="admin-left">
+                        <h2>Genel Durum</h2>
+                        <div id="dashboard"></div>
+                        <div class="admin-filter-bar">
+                            <button class="filter-chip active" data-filter="all" onclick="setAdminQueueFilter('all')">Hepsi</button>
+                            <button class="filter-chip" data-filter="tickets-open" onclick="setAdminQueueFilter('tickets-open')">Açık Ticket</button>
+                            <button class="filter-chip" data-filter="tickets-critical" onclick="setAdminQueueFilter('tickets-critical')">Kritik SLA</button>
+                            <button class="filter-chip" data-filter="requests-pending" onclick="setAdminQueueFilter('requests-pending')">Bekleyen Request</button>
+                            <button class="filter-chip" data-filter="MS" onclick="setAdminQueueFilter('MS')">MS</button>
+                            <button class="filter-chip" data-filter="Network" onclick="setAdminQueueFilter('Network')">Network</button>
+                            <button class="filter-chip" data-filter="Technical" onclick="setAdminQueueFilter('Technical')">Technical</button>
+                        </div>
+                        <div id="adminAlerts"></div>
+                        <div id="adminQueues"></div>
+                    </div>
+
+                    <div class="admin-right">
+                        <div class="nav-card">
+                            <h3>📦 Request Onayları</h3>
+                            <p>Onay bekleyen istek taleplerini görüntüle, onayla veya reddet.</p>
+
+                            <button onclick="window.location.href='admin-requests.html'">
+                                Requestleri Aç
+                            </button>
+                        </div>
+                        <div class="nav-card">
+                            <h3>📋 Çağrı Yönetimi</h3>
+                            <p>Tüm çağrıları görüntüle, filtrele ve yönet.</p>
+
+                            <button onclick="window.location.href='admin-tickets.html'">
+                                Çağrıları Aç
+                            </button>
+                        </div>
+
+                        <div class="nav-card">
+                            <h3>📊 Reports & Analytics</h3>
+                            <p>Performans, kategori ve departman raporları.</p>
+
+                            <button onclick="window.location.href='admin-reports.html'">
+                                Raporları Aç
+                            </button>
+                        </div>
+
+                        <div class="nav-card">
+                            <h3>Staff Performance</h3>
+                            <p>Personel bazlı iş yükü, tamamlanma oranı ve çözüm süreleri.</p>
+
+                            <button onclick="window.location.href='staff-performance.html'">
+                                Performansı Aç
+                            </button>
+                        </div>
+
+                        <div class="nav-card">
+                            <h3>AI Agent Rapor</h3>
+                            <p>Agent yönlendirme müdahalelerini ve karar gerekçelerini incele.</p>
+
+                            <button onclick="window.location.href='ai-agent-reports.html'">
+                                AI Raporu Aç
+                            </button>
+                        </div>
+
+                        <div class="nav-card">
+                            <h3>Audit Log</h3>
+                            <p>Kullanıcı, admin ve IT staff işlemlerini izleme kaydı.</p>
+
+                            <button onclick="window.location.href='audit-log.html'">
+                                Audit Log Aç
+                            </button>
+                        </div>
+
+                        <div class="nav-card">
+                            <h3>Kullanıcı Yönetimi</h3>
+                            <p>Admin, staff ve user hesaplarını oluştur, güncelle veya sil.</p>
+
+                            <button onclick="window.location.href='admin-users.html'">
+                                Kullanıcıları Aç
+                            </button>
+                        </div>
+
+                        <div class="nav-card">
+                            <h3>Knowledge Base</h3>
+                            <p>KB makalelerini yönet, arama sonuçlarını canlı tut.</p>
+
+                            <button onclick="window.location.href='admin-kb.html'">
+                                KB'yi Aç
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const adminRole = localStorage.getItem("role");
+
+    if (!adminRole || adminRole !== "admin") {
+        window.location.replace("login.html");
+    }
+</script>
+
+<script src="script.js"></script>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        loadDashboard();
+    });
+</script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

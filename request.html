@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>İstek Talebi Oluştur</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="page-header">
+      <div>
+        <h1>İstek Talebi Oluştur</h1>
+        <p>Donanım, yazılım, lisans, erişim ve network taleplerini oluştur.</p>
+      </div>
+
+      <div class="page-actions">
+        <button type="button" class="secondary-btn" onclick="goBack()">Geri Dön</button>
+        <button type="button" class="logout-btn" onclick="logout()">Çıkış Yap</button>
+      </div>
+    </div>
+
+    <form id="requestForm">
+      <label>Ad Soyad</label>
+      <input type="text" id="fullName" required />
+
+      <label>Departman</label>
+      <input type="text" id="department" required />
+
+      <label>İstek Türü</label>
+      <select id="requestType" required>
+        <option value="">Seçiniz</option>
+        <optgroup label="Donanım Talepleri">
+          <option value="Monitör Talebi">Monitör Talebi</option>
+          <option value="Mouse Talebi">Mouse Talebi</option>
+          <option value="Klavye Talebi">Klavye Talebi</option>
+          <option value="Laptop Talebi">Laptop Talebi</option>
+          <option value="Docking Station Talebi">Docking Station Talebi</option>
+          <option value="Kulaklık/Kamera Talebi">Kulaklık/Kamera Talebi</option>
+          <option value="Yazıcı/Tarayıcı Talebi">Yazıcı/Tarayıcı Talebi</option>
+          <option value="Mobil Cihaz Talebi">Mobil Cihaz Talebi</option>
+        </optgroup>
+        <optgroup label="Microsoft ve Yetki Talepleri">
+          <option value="Yazılım Talebi">Yazılım Talebi</option>
+          <option value="Lisans Talebi">Lisans Talebi</option>
+          <option value="Yetki Talebi">Yetki Talebi</option>
+          <option value="Ortak Mailbox Talebi">Ortak Mailbox Talebi</option>
+          <option value="Dağıtım Grubu Talebi">Dağıtım Grubu Talebi</option>
+          <option value="Dosya Paylaşım Alanı Talebi">Dosya Paylaşım Alanı Talebi</option>
+        </optgroup>
+        <optgroup label="Network Talepleri">
+          <option value="VPN Yetkisi">VPN Yetkisi</option>
+          <option value="Statik IP Talebi">Statik IP Talebi</option>
+          <option value="Network Port Aktivasyonu">Network Port Aktivasyonu</option>
+          <option value="Firewall Erişim Talebi">Firewall Erişim Talebi</option>
+          <option value="Uygulama Erişim Talebi">Uygulama Erişim Talebi</option>
+        </optgroup>
+      </select>
+
+      <label>Açıklama</label>
+      <textarea id="description" required></textarea>
+
+      <button type="submit">Talebi Oluştur</button>
+    </form>
+
+    <p id="requestMessage"></p>
+
+    <hr>
+
+    <h2>İstek Taleplerim</h2>
+    <div id="userRequestsList"></div>
+    <div id="userRequestDetail"></div>
+  </div>
+</div>
+
+<script src="request.js"></script>
+<script src="session-timeout.js"></script>
+</body>
+</html>

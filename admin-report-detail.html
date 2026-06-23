@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Detail</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+
+        <button onclick="window.location.href='admin-reports.html'">
+            ← Raporlara Geri Dön
+        </button>
+
+        <hr>
+
+        <h1 id="reportTitle">Rapor Detayı</h1>
+        <p id="reportDescription"></p>
+
+        <div id="reportDetailContent"></div>
+
+    </div>
+</div>
+
+<script>
+    const adminRole = localStorage.getItem("role");
+
+    if (!adminRole || adminRole !== "admin") {
+        window.location.replace("login.html");
+    }
+</script>
+
+<script src="script.js"></script>
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        loadReportDetail();
+    });
+</script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank IT Service Desk - User Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="admin-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <a class="logo-box logo-link" href="login.html" aria-label="Giriş sayfasına git"><img src="assets/bank-logo.svg" alt="Banka"></a>
+                    <h3>IT Service Desk</h3>
+                </div>
+
+                <a href="admin.html">🏠 Dashboard</a>
+                <a href="admin-tickets.html">📋 Tickets</a>
+                <a href="admin-reports.html">📊 Reports</a>
+                <a href="admin-requests.html">Requests</a>
+                <a href="staff-performance.html">Staff Performance</a>
+                <a href="ai-agent-reports.html">AI Agent Rapor</a>
+                <a href="audit-log.html">Audit Log</a>
+                <a href="admin-users.html" class="active">Kullanıcı Yönetimi</a>
+                <a href="admin-kb.html">Knowledge Base</a>
+
+                <button onclick="logout()">Çıkış Yap</button>
+            </aside>
+
+            <main class="content-area">
+                <div class="logo-area">
+                    <div>
+                        <h1>Kullanıcı Yönetimi</h1>
+                        <p>Admin kullanıcıları, staffları ve son kullanıcıları yönet.</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div id="userSummary" class="performance-summary"></div>
+
+                <div class="ticket-card">
+                    <h2 id="userFormTitle">Yeni Kullanıcı Oluştur</h2>
+                    <p>Şifre alanını güncelleme sırasında boş bırakırsan mevcut şifre korunur.</p>
+                    <form id="userForm">
+                        <input type="hidden" id="userId" value="">
+                        <input id="userFullName" type="text" placeholder="Ad Soyad" required>
+                        <input id="userUsername" type="text" placeholder="Kullanıcı adı" required>
+                        <select id="userRole" required>
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
+                            <option value="ms">ms</option>
+                            <option value="technical">technical</option>
+                            <option value="network">network</option>
+                        </select>
+                        <input id="userDepartment" type="text" placeholder="Departman">
+                        <input id="userPassword" type="password" placeholder="Şifre">
+                        <button type="submit" id="userFormSubmit">Kullanıcıyı Kaydet</button>
+                        <button type="button" class="secondary-btn" onclick="resetUserForm()">Formu Temizle</button>
+                    </form>
+                </div>
+
+                <div class="top-right-actions">
+                    <input id="userSearch" type="text" placeholder="Kullanıcı ara" oninput="filterUsers()">
+                    <button class="secondary-btn" onclick="loadUsers()">Yenile</button>
+                </div>
+
+                <div id="userList"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script>
+    const adminRole = localStorage.getItem("role");
+
+    if (!adminRole || adminRole !== "admin") {
+        window.location.replace("login.html");
+    }
+</script>
+
+<script src="admin-users.js"></script>
+
+<script src="session-timeout.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank IT Service Desk - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+    const role = localStorage.getItem("role");
+
+    if (role === "admin") {
+        window.location.href = "admin.html";
+    }
+
+    if (role === "user") {
+        window.location.href = "index.html";
+    }
+</script>
+<body>
+<div class="login-shortcuts">
+    <a href="admin-login.html">Admin Login</a>
+    <a href="staff-login.html">IT Staff Login</a>
+</div>
+
+<div class="container">
+    <div class="card">
+
+        <div class="logo-area">
+            <a class="logo-box logo-link" href="login.html" aria-label="Giriş sayfasına git"><img src="assets/bank-logo.svg" alt="Banka"></a>
+
+            <div>
+                <h1>Bank IT Service Desk</h1>
+                <p>Login Panel</p>
+            </div>
+        </div>
+
+        <h2>Giriş Yap</h2>
+
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+
+        <button onclick="login()">Giriş Yap</button>
+
+
+        <div id="loginResult"></div>
+
+    </div>
+</div>
+
+<script src="login.js"></script>
+<script src="session-timeout.js"></script>
+</body>
+</html>
